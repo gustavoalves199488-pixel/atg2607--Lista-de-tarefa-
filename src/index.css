@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+@theme {
+  /* Typography */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Colors — Warm Light Theme */
+  --color-bg: hsl(40, 30%, 97%);
+  --color-bg-secondary: hsl(40, 20%, 94%);
+  --color-surface: hsl(0, 0%, 100%);
+  --color-surface-hover: hsl(40, 25%, 98%);
+  --color-border: hsl(40, 15%, 88%);
+  --color-border-light: hsl(40, 15%, 92%);
+
+  /* Text */
+  --color-text-primary: hsl(220, 20%, 18%);
+  --color-text-secondary: hsl(220, 10%, 45%);
+  --color-text-muted: hsl(220, 8%, 62%);
+
+  /* Accent — Teal */
+  --color-accent: hsl(172, 66%, 40%);
+  --color-accent-hover: hsl(172, 66%, 35%);
+  --color-accent-light: hsl(172, 50%, 92%);
+  --color-accent-subtle: hsl(172, 40%, 96%);
+
+  /* Category Colors */
+  --color-cat-trabalho: hsl(210, 70%, 55%);
+  --color-cat-trabalho-bg: hsl(210, 70%, 94%);
+  --color-cat-pessoal: hsl(330, 65%, 55%);
+  --color-cat-pessoal-bg: hsl(330, 65%, 94%);
+  --color-cat-estudos: hsl(45, 85%, 48%);
+  --color-cat-estudos-bg: hsl(45, 85%, 92%);
+
+  /* Priority Colors */
+  --color-pri-alta: hsl(0, 72%, 55%);
+  --color-pri-alta-bg: hsl(0, 72%, 94%);
+  --color-pri-media: hsl(35, 85%, 50%);
+  --color-pri-media-bg: hsl(35, 85%, 92%);
+  --color-pri-baixa: hsl(172, 50%, 45%);
+  --color-pri-baixa-bg: hsl(172, 50%, 92%);
+
+  /* Danger */
+  --color-danger: hsl(0, 72%, 55%);
+  --color-danger-hover: hsl(0, 72%, 48%);
+  --color-danger-bg: hsl(0, 72%, 96%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px hsla(220, 20%, 18%, 0.06);
+  --shadow-md: 0 4px 12px hsla(220, 20%, 18%, 0.08);
+  --shadow-lg: 0 8px 24px hsla(220, 20%, 18%, 0.1);
+  --shadow-card: 0 1px 3px hsla(220, 20%, 18%, 0.04), 0 4px 12px hsla(220, 20%, 18%, 0.03);
+  --shadow-card-hover: 0 4px 16px hsla(220, 20%, 18%, 0.08), 0 8px 24px hsla(220, 20%, 18%, 0.04);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+    font-size: 16px;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-light);
+    color: var(--color-text-primary);
+  }
+}
+
+/* Custom checkbox */
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s var(--ease-spring);
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+
+.custom-checkbox:hover {
+  border-color: var(--color-accent);
+  transform: scale(1.1);
+}
+
+.custom-checkbox.checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  animation: checkPop 0.35s var(--ease-spring);
+}
+
+.custom-checkbox.checked svg {
+  color: white;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* Task card completed state */
+.task-completed {
+  opacity: 0.5;
+}
+
+.task-completed .task-title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: hsla(220, 20%, 18%, 0.3);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: overlayIn 0.2s var(--ease-smooth);
+  padding: 16px;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 480px;
+  animation: modalIn 0.3s var(--ease-spring);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Task enter animation */
+@keyframes taskSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task-enter {
+  animation: taskSlideIn 0.3s var(--ease-smooth) forwards;
+}
+
+/* Pulse animation for empty state */
+@keyframes gentlePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.pulse-gentle {
+  animation: gentlePulse 2s ease-in-out infinite;
+}
+
+/* Calendar day with tasks indicator */
+.calendar-day-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* Analytics bar animation */
+@keyframes barGrow {
+  from { width: 0; }
+}
+
+.bar-animate {
+  animation: barGrow 0.8s var(--ease-smooth) forwards;
+}
